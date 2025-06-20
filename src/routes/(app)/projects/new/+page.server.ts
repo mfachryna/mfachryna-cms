@@ -46,6 +46,7 @@ export const actions: Actions = {
 			const githubUrl = formData.get('githubUrl')?.toString() || null;
 
 			const imageUrl = formData.get('imageUrl')?.toString() || null;
+			const thumbnailUrl = formData.get('thumbnailUrl')?.toString() || null;
 
 			const imagesJson = formData.get('additionalImagesJson')?.toString();
 			let images = [];
@@ -78,6 +79,7 @@ export const actions: Actions = {
 					liveUrl,
 					githubUrl,
 					imageUrl,
+					thumbnailUrl,
 					images,
 					featured,
 					order,

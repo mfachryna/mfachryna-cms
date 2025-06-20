@@ -54,6 +54,7 @@ export const actions: Actions = {
 			const liveUrl = formData.get('liveUrl')?.toString() || null;
 			const githubUrl = formData.get('githubUrl')?.toString() || null;
 			const imageUrl = formData.get('imageUrl')?.toString() || null;
+			const thumbnailUrl = formData.get('thumbnailUrl')?.toString() || null;
 			const imagesJson = formData.get('additionalImagesJson')?.toString();
 			let images = [];
 			if (imagesJson) {
@@ -85,6 +86,7 @@ export const actions: Actions = {
 					liveUrl,
 					githubUrl,
 					imageUrl,
+					thumbnailUrl,
 					images,
 					featured,
 					order,

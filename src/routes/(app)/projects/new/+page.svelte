@@ -35,6 +35,7 @@
 	let isFormLoading = false;
 	let selectedTags: number[] = data.project?.tags?.map((t) => t.id) || [];
 	let featuredImageUrl = data.project?.imageUrl || '';
+	let thumbnailImageUrl = data.project?.thumbnailUrl || '';
 	let featuredImagePublicId = '';
 	let featuredImageSizes: any = {};
 	let showSubmitModal = false;
@@ -64,6 +65,7 @@
 	let initialOrder = data.project?.order || 1;
 	let initialFeatured = data.project?.featured || false;
 	let initialFeaturedImage = data.project?.imageUrl || '';
+	let initialThumbnailImage = data.project?.thumbnailUrl || '';
 	let initialAdditionalImages = additionalImages.slice();
 	let initialTags = data.project?.tags?.map((t) => t.id) || [];
 	let hasUnsavedChanges = false;
@@ -100,6 +102,7 @@
 				currentDescription ||
 				content ||
 				featuredImageUrl ||
+				thumbnailImageUrl ||
 				additionalImages.length ||
 				selectedTags.length
 			);
@@ -132,6 +135,7 @@
 			orderValue !== initialOrder ||
 			featuredValue !== initialFeatured ||
 			featuredImageUrl !== initialFeaturedImage ||
+			thumbnailImageUrl !== initialThumbnailImage ||
 			JSON.stringify(additionalImages) !== JSON.stringify(initialAdditionalImages) ||
 			JSON.stringify(selectedTags.sort()) !== JSON.stringify(initialTags.sort());
 	}
@@ -181,6 +185,16 @@
 
 	function handleTagsChange(event: CustomEvent) {
 		selectedTags = event.detail.selectedTags;
+		updateChangeDetection();
+	}
+
+	function handleThumbnailImageUpload(event: CustomEvent) {
+		thumbnailImageUrl = event.detail.url;
+		updateChangeDetection();
+	}
+
+	function handleThumbnailImageRemove() {
+		thumbnailImageUrl = '';
 		updateChangeDetection();
 	}
 
@@ -591,6 +605,28 @@
 						on:error={handleImageError}
 					/>
 					<input type="hidden" name="imageUrl" bind:value={featuredImageUrl} />
+
+
+					<p class="mt-2 text-xs text-gray-500">
+						Main project image displayed in listings and headers.
+					</p>
+				</div>
+				<div class="card p-6">
+					<h3 class="mb-4 flex items-center text-lg font-medium text-gray-900">
+						<Image class="mr-2 h-5 w-5" />
+						Thumbnail Image
+					</h3>
+
+					<ImageUpload
+						currentImageUrl={thumbnailImageUrl}
+						folder={folderPath}
+						multiple={false}
+						maxSize={10}
+						on:upload={handleThumbnailImageUpload}
+						on:remove={handleThumbnailImageRemove}
+						on:error={handleImageError}
+					/>
+					<input type="hidden" name="thumbnailUrl" bind:value={thumbnailImageUrl} />
 
 
 					<p class="mt-2 text-xs text-gray-500">

@@ -279,9 +279,9 @@
 			{#each filteredProjects as project}
 				<Card hover="hover:shadow-md transition-shadow">
 					<div class="relative mb-4">
-						{#if project.imageUrl}
+						{#if project.thumbnailUrl}
 							<img
-								src={project.imageUrl}
+								src={project.thumbnailUrl}
 								alt={project.title}
 								class="h-48 w-full rounded-lg object-cover"
 							/>
