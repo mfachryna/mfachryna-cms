@@ -232,14 +232,18 @@
 			{:else}
 				<div class="relative">
 					<!-- Timeline line -->
-					<div class="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+					<div class="absolute top-0 bottom-0 left-6 w-0.5 bg-gray-200"></div>
 
 					<div class="space-y-8">
 						{#each filteredExperiences.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()) as experience, index}
 							<div class="relative">
 								<!-- Timeline dot -->
-								<div class="absolute left-4 top-6 z-10 h-4 w-4 rounded-full border-4 {!experience.endDate ? 'border-green-500 bg-green-100' : 'border-blue-500 bg-blue-100'}"></div>
-								
+								<div
+									class="absolute top-6 left-4 z-10 h-4 w-4 rounded-full border-4 {!experience.endDate
+										? 'border-green-500 bg-green-100'
+										: 'border-blue-500 bg-blue-100'}"
+								></div>
+
 								<!-- Experience card -->
 								<div class="ml-12 rounded-lg bg-gray-50 p-6 transition-shadow hover:shadow-md">
 									<div class="mb-4 flex items-start justify-between">
@@ -283,7 +287,6 @@
 													<span>{formatDuration(experience.startDate, experience.endDate)}</span>
 												</div>
 											</div>
-
 											{#if experience.tags?.length > 0}
 												<div class="mb-3 flex flex-wrap gap-1">
 													{#each experience.tags.slice(0, 4) as tag}
@@ -298,7 +301,11 @@
 													{/if}
 												</div>
 											{/if}
-
+											{#if experience.description}
+												<div class="mb-2`">
+													<p class="mb-2 text-sm font-medium text-gray-700">{experience.description}</p>
+												</div>
+											{/if}
 											{#if experience.highlights?.length > 0}
 												<div class="mb-4">
 													<p class="mb-2 text-sm font-medium text-gray-700">Key Highlights:</p>
@@ -329,7 +336,7 @@
 											>
 												<Edit class="h-4 w-4" />
 											</button>
-											
+
 											<button
 												on:click={() => previewExperience(experience)}
 												class="rounded-lg p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
@@ -337,7 +344,7 @@
 											>
 												<Eye class="h-4 w-4" />
 											</button>
-											
+
 											<button
 												on:click={() => deleteExperience(experience)}
 												class="rounded-lg p-2 text-red-600 hover:bg-red-50 hover:text-red-700"

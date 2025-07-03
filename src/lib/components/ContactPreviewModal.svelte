@@ -39,7 +39,7 @@
 
 Thank you for reaching out regarding your ${contact.projectType} project. I've reviewed your requirements and I'm excited to discuss how I can help bring your vision to life.
 
-Based on your project description:
+Based on your project needs:
 "${contact.needs}"
 
 I'd love to schedule a call to discuss your project in more detail and provide you with a customized proposal.
@@ -266,6 +266,14 @@ Best regards,
                                 </div>
 
                                 <div class="rounded-lg bg-gray-50 p-3">
+                                    <div class="mb-2 flex items-center space-x-2">
+                                        <MessageSquare class="h-4 w-4 text-gray-500" />
+                                        œ<span class="text-sm font-medium text-gray-700">Project Needs</span>
+                                    </div>
+                                    <p class="text-sm leading-relaxed text-gray-900">{contact.needs}</p>
+                                </div>
+
+                                <div class="rounded-lg bg-gray-50 p-3">
                                     <div class="mb-1 flex items-center space-x-2">
                                         <DollarSign class="h-4 w-4 text-gray-500" />
                                         <span class="text-sm font-medium text-gray-700">Budget</span>
@@ -278,7 +286,7 @@ Best regards,
                                         <MessageSquare class="h-4 w-4 text-gray-500" />
                                         <span class="text-sm font-medium text-gray-700">Project Description</span>
                                     </div>
-                                    <p class="text-sm leading-relaxed text-gray-900">{contact.needs}</p>
+                                    <p class="text-sm leading-relaxed text-gray-900">{contact.additional}</p>
                                 </div>
                             </div>
                         </div>

@@ -37,6 +37,8 @@
 	let currentRole = data.experience?.role || '';
 	let currentCompany = data.experience?.company || '';
 	let currentLocation = data.experience?.location || '';
+	let currentDescription = data.experience?.description || '';
+	let initialDescription = data.experience?.description || '';
 
 	let currentStartDate = data.experience?.startDate
 		? new Date(data.experience.startDate).toISOString().split('T')[0]
@@ -95,14 +97,13 @@
 			currentRole !== initialRole ||
 			currentCompany !== initialCompany ||
 			currentLocation !== initialLocation ||
-			content !== initialContent ||
+			currentDescription !== initialDescription ||  // ADD THIS
 			currentStartDate !== initialStartDate ||
 			currentEndDate !== initialEndDate ||
 			currentIsCurrent !== initialIsCurrent ||
-			currentOrder !== initialOrder ||
-			JSON.stringify(highlights.filter((h) => h.trim())) !==
-				JSON.stringify(initialHighlights.filter((h) => h.trim())) ||
-			JSON.stringify(selectedTags.sort()) !== JSON.stringify(initialTags.sort());
+			content !== initialContent ||
+			!arraysEqual(highlights, initialHighlights) ||
+			!arraysEqual(selectedTagIds, initialSelectedTagIds);
 	}
 
 	$: if (browser) {
@@ -176,6 +177,27 @@
 		highlights[index] = value;
 		highlights = [...highlights];
 		updateChangeDetection();
+	}
+
+	function handleDescriptionChange(event: Event) {
+		const target = event.target as HTMLTextAreaElement;
+		currentDescription = target.value;
+		checkForChanges();
+	}
+
+	function checkForChanges() {
+		hasUnsavedChanges = 
+			currentTitle !== initialTitle ||
+			currentRole !== initialRole ||
+			currentCompany !== initialCompany ||
+			currentLocation !== initialLocation ||
+			currentDescription !== initialDescription ||  // ADD THIS
+			currentStartDate !== initialStartDate ||
+			currentEndDate !== initialEndDate ||
+			currentIsCurrent !== initialIsCurrent ||
+			content !== initialContent ||
+			!arraysEqual(highlights, initialHighlights) ||
+			!arraysEqual(selectedTagIds, initialSelectedTagIds);
 	}
 
 	function handleSubmit() {
@@ -281,6 +303,8 @@
 					goto(result.location);
 				} else if (result.type === 'success') {
 					goto('/experiences');
+				} else if (result.type === 'failure') {
+					form = { error: result.data?.error };
 				} else {
 					await update();
 				}
@@ -305,7 +329,7 @@
 							name="title"
 							id="title"
 							required
-							value={data.experience?.title || ''}
+							value={currentTitle}
 							on:input={handleTitleChange}
 							class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
 							placeholder="e.g., Senior Frontend Developer"
@@ -322,7 +346,7 @@
 								name="role"
 								id="role"
 								required
-								value={data.experience?.role || ''}
+								value={currentRole}
 								on:input={handleRoleChange}
 								class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
 								placeholder="e.g., Frontend Developer"
@@ -338,7 +362,7 @@
 								name="company"
 								id="company"
 								required
-								value={data.experience?.company || ''}
+								value={currentCompany}
 								on:input={handleCompanyChange}
 								class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
 								placeholder="e.g., Tech Company Inc."
@@ -355,11 +379,29 @@
 							name="location"
 							id="location"
 							required
-							value={data.experience?.location || ''}
+							value={currentLocation}
 							on:input={handleLocationChange}
 							class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
 							placeholder="e.g., San Francisco, CA or Remote"
 						/>
+					</div>
+
+					<div>
+						<label for="description" class="mb-2 block text-sm font-medium text-gray-700">
+							Short Description
+						</label>
+						<textarea
+							name="description"
+							id="description"
+							rows="3"
+							value={currentDescription}
+							on:input={handleDescriptionChange}
+							class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+							placeholder="Brief summary of your role and key responsibilities..."
+						></textarea>
+						<p class="mt-1 text-xs text-gray-500">
+							A short summary that will be shown in lists and previews
+						</p>
 					</div>
 				</div>
 
@@ -496,7 +538,7 @@
 								name="order"
 								id="order"
 								min="1"
-								value={data.experience?.order || 1}
+								value={currentOrder}
 								on:input={handleOrderChange}
 								class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
 							/>

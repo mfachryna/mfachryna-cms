@@ -37,6 +37,8 @@
 	let currentRole = data.experience?.role || '';
 	let currentCompany = data.experience?.company || '';
 	let currentLocation = data.experience?.location || '';
+	let currentDescription = data.experience?.description || '';
+	let initialDescription = data.experience?.description || '';
 
 	let currentStartDate = data.experience?.startDate
 		? new Date(data.experience.startDate).toISOString().split('T')[0]
@@ -82,7 +84,7 @@
 			currentRole !== initialRole ||
 			currentCompany !== initialCompany ||
 			currentLocation !== initialLocation ||
-			content !== initialContent ||
+			currentDescription !== initialDescription ||
 			currentStartDate !== initialStartDate ||
 			currentEndDate !== initialEndDate ||
 			currentIsCurrent !== initialIsCurrent ||
@@ -188,6 +190,35 @@
 	function confirmCancel() {
 		showCancelModal = false;
 		goto('/experiences');
+	}
+
+	function handleDescriptionChange(event: Event) {
+		const target = event.target as HTMLTextAreaElement;
+		currentDescription = target.value;
+		checkForChanges();
+	}
+
+	function checkForChanges() {
+		hasUnsavedChanges =
+			currentTitle !== initialTitle ||
+			currentRole !== initialRole ||
+			currentCompany !== initialCompany ||
+			currentLocation !== initialLocation ||
+			currentDescription !== initialDescription ||
+			currentStartDate !== initialStartDate ||
+			currentEndDate !== initialEndDate ||
+			currentIsCurrent !== initialIsCurrent ||
+			content !== initialContent ||
+			!arraysEqual(highlights, initialHighlights) ||
+			!arraysEqual(selectedTags, initialTags);
+	}
+
+	function arraysEqual(a: any[], b: any[]) {
+		if (a.length !== b.length) return false;
+		for (let i = 0; i < a.length; i++) {
+			if (a[i] !== b[i]) return false;
+		}
+		return true;
 	}
 </script>
 
@@ -345,6 +376,23 @@
 						/>
 					</div>
 
+					<div>
+						<label for="description" class="mb-2 block text-sm font-medium text-gray-700">
+							Short Description
+						</label>
+						<textarea
+							name="description"
+							id="description"
+							rows="3"
+							value={currentDescription}
+							on:input={handleDescriptionChange}
+							class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+							placeholder="Brief summary of your role and key responsibilities..."
+						></textarea>
+						<p class="mt-1 text-xs text-gray-500">
+							A short summary that will be shown in lists and previews
+						</p>
+					</div>
 				</div>
 
 				

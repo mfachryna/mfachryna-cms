@@ -58,6 +58,7 @@ export const actions: Actions = {
 			const location = formData.get('location')?.toString();
 
 			const content = formData.get('content')?.toString() || null;
+			const description = formData.get('description')?.toString() || null;
 
 			const startDateStr = formData.get('startDate')?.toString();
 			const endDateStr = formData.get('endDate')?.toString();
@@ -94,6 +95,7 @@ export const actions: Actions = {
 					location,
 
 					content,
+					description,
 					startDate,
 					endDate,
 					highlights,
