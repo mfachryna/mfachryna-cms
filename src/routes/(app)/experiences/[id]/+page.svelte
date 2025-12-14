@@ -47,6 +47,7 @@
 		? new Date(data.experience.endDate).toISOString().split('T')[0]
 		: '';
 	let currentIsCurrent = !data.experience?.endDate || false;
+	let currentIsHidden = data.experience?.isHidden || false;
 
 	let initialTitle = data.experience?.title || '';
 	let initialRole = data.experience?.role || '';
@@ -61,6 +62,7 @@
 		? new Date(data.experience.endDate).toISOString().split('T')[0]
 		: '';
 	let initialIsCurrent = !data.experience?.endDate || false;
+	let initialIsHidden = data.experience?.isHidden || false;
 
 	let initialHighlights = data.experience?.highlights || [''];
 	let initialTags = data.experience?.tags?.map((t) => t.id) || [];
@@ -88,6 +90,7 @@
 			currentStartDate !== initialStartDate ||
 			currentEndDate !== initialEndDate ||
 			currentIsCurrent !== initialIsCurrent ||
+			currentIsHidden !== initialIsHidden ||
 			JSON.stringify(highlights.filter((h) => h.trim())) !==
 				JSON.stringify(initialHighlights.filter((h) => h.trim())) ||
 			JSON.stringify(selectedTags.sort()) !== JSON.stringify(initialTags.sort());
@@ -136,6 +139,11 @@
 		if (currentIsCurrent) {
 			currentEndDate = '';
 		}
+		updateChangeDetection();
+	}
+
+	function handleIsHiddenChange(event: Event) {
+		currentIsHidden = (event.target as HTMLInputElement).checked;
 		updateChangeDetection();
 	}
 
@@ -208,6 +216,7 @@
 			currentStartDate !== initialStartDate ||
 			currentEndDate !== initialEndDate ||
 			currentIsCurrent !== initialIsCurrent ||
+			currentIsHidden !== initialIsHidden ||
 			content !== initialContent ||
 			!arraysEqual(highlights, initialHighlights) ||
 			!arraysEqual(selectedTags, initialTags);
@@ -523,7 +532,19 @@
 							</div>
 						{/if}
 
-						
+						<div class="flex items-center pt-2">
+							<input
+								type="checkbox"
+								name="isHidden"
+								id="isHidden"
+								bind:checked={currentIsHidden}
+								on:change={handleIsHiddenChange}
+								class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+							/>
+							<label for="isHidden" class="ml-2 text-sm text-gray-700">
+								Hide this experience
+							</label>
+						</div>
 					</div>
 				</div>
 

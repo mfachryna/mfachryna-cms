@@ -7,6 +7,7 @@
 		MoreHorizontal,
 		Edit,
 		Eye,
+		EyeOff,
 		Trash2,
 		Briefcase,
 		MapPin,
@@ -15,6 +16,7 @@
 		Clock,
 		Building
 	} from 'lucide-svelte';
+
 	import ActionButtons from '$lib/components/ui/ActionButtons.svelte';
 
 	export let data;
@@ -255,6 +257,14 @@
 														class="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800"
 													>
 														Current
+													</span>
+												{/if}
+												{#if experience.isHidden}
+													<span
+														class="flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800"
+													>
+														<EyeOff class="mr-1 h-3 w-3" />
+														Hidden
 													</span>
 												{/if}
 											</div>

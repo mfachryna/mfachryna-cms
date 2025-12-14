@@ -22,6 +22,7 @@ model Experience {
   tags       Tag[]     @relation("ExperienceToTag")
   createdAt  DateTime  @default(now()) @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
+  isHidden   Boolean   @default(false) @map("is_hidden")
 
   @@map("experiences")
 }

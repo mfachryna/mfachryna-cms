@@ -47,6 +47,7 @@
 		? new Date(data.experience.endDate).toISOString().split('T')[0]
 		: '';
 	let currentIsCurrent = !data.experience?.endDate || false;
+	let currentIsHidden = data.experience?.isHidden || false;
 	let currentOrder = data.experience?.order || 1;
 
 	let initialTitle = data.experience?.title || '';
@@ -62,6 +63,7 @@
 		? new Date(data.experience.endDate).toISOString().split('T')[0]
 		: '';
 	let initialIsCurrent = !data.experience?.endDate || false;
+	let initialIsHidden = data.experience?.isHidden || false;
 	let initialOrder = data.experience?.order || 1;
 	let initialHighlights = data.experience?.highlights || [''];
 	let initialTags = data.experience?.tags?.map((t) => t.id) || [];
@@ -101,6 +103,7 @@
 			currentStartDate !== initialStartDate ||
 			currentEndDate !== initialEndDate ||
 			currentIsCurrent !== initialIsCurrent ||
+			currentIsHidden !== initialIsHidden ||
 			content !== initialContent ||
 			!arraysEqual(highlights, initialHighlights) ||
 			!arraysEqual(selectedTagIds, initialSelectedTagIds);
@@ -152,6 +155,11 @@
 		updateChangeDetection();
 	}
 
+	function handleIsHiddenChange(event: Event) {
+		currentIsHidden = (event.target as HTMLInputElement).checked;
+		updateChangeDetection();
+	}
+
 	function handleOrderChange(event: Event) {
 		currentOrder = Number((event.target as HTMLInputElement).value);
 		updateChangeDetection();
@@ -195,6 +203,7 @@
 			currentStartDate !== initialStartDate ||
 			currentEndDate !== initialEndDate ||
 			currentIsCurrent !== initialIsCurrent ||
+			currentIsHidden !== initialIsHidden ||
 			content !== initialContent ||
 			!arraysEqual(highlights, initialHighlights) ||
 			!arraysEqual(selectedTagIds, initialSelectedTagIds);
@@ -543,6 +552,20 @@
 								class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
 							/>
 							<p class="mt-1 text-xs text-gray-500">Lower numbers appear first</p>
+						</div>
+
+						<div class="flex items-center pt-2">
+							<input
+								type="checkbox"
+								name="isHidden"
+								id="isHidden"
+								checked={currentIsHidden}
+								on:change={handleIsHiddenChange}
+								class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+							/>
+							<label for="isHidden" class="ml-2 text-sm text-gray-700">
+								Hide this experience
+							</label>
 						</div>
 					</div>
 				</div>

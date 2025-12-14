@@ -48,6 +48,7 @@ export const actions: Actions = {
 			const startDateStr = formData.get('startDate')?.toString();
 			const endDateStr = formData.get('endDate')?.toString();
 			const isCurrent = formData.get('isCurrent') === 'on';
+			const isHidden = formData.get('isHidden') === 'on';
 
 			const highlights = formData
 				.getAll('highlights')
@@ -68,6 +69,7 @@ export const actions: Actions = {
 						startDate: startDateStr,
 						endDate: endDateStr,
 						isCurrent,
+						isHidden,
 						highlights,
 						tagIds
 					}
@@ -93,6 +95,7 @@ export const actions: Actions = {
 					content,
 					startDate,
 					endDate,
+					isHidden,
 					highlights,
 					tags: {
 						connect: tagIds.map((id) => ({ id }))

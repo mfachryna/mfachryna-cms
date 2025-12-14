@@ -63,6 +63,7 @@ export const actions: Actions = {
 			const startDateStr = formData.get('startDate')?.toString();
 			const endDateStr = formData.get('endDate')?.toString();
 			const isCurrent = formData.get('isCurrent') === 'on';
+			const isHidden = formData.get('isHidden') === 'on';
 
 			const highlights = formData
 				.getAll('highlights')
@@ -98,6 +99,7 @@ export const actions: Actions = {
 					description,
 					startDate,
 					endDate,
+					isHidden,
 					highlights,
 
 					tags: {
