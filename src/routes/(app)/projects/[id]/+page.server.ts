@@ -51,6 +51,7 @@ export const actions: Actions = {
 			const title = formData.get('title')?.toString();
 			const subtitle = formData.get('subtitle')?.toString() || null;
 			const description = formData.get('description')?.toString();
+			const content = formData.get('content')?.toString() || null;
 			const liveUrl = formData.get('liveUrl')?.toString() || null;
 			const githubUrl = formData.get('githubUrl')?.toString() || null;
 			const imageUrl = formData.get('imageUrl')?.toString() || null;
@@ -83,6 +84,7 @@ export const actions: Actions = {
 					title,
 					subtitle,
 					description,
+					content,
 					liveUrl,
 					githubUrl,
 					imageUrl,
