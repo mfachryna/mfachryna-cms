@@ -28,11 +28,11 @@
 		Minus,
 		MoreHorizontal,
 		ChevronDown,
-		Youtube,
 		Link2,
 		Subscript,
 		Superscript
 	} from 'lucide-svelte';
+	import YoutubeIcon from '$lib/components/icons/YoutubeIcon.svelte';
 
 	export let content = '';
 	export let placeholder = 'Start writing...';
@@ -1201,7 +1201,7 @@
 					class="rounded p-2 transition-colors hover:bg-gray-200"
 					title="Insert YouTube Video"
 				>
-					<Youtube class="h-4 w-4" />
+					<YoutubeIcon class="h-4 w-4" />
 				</button>
 				<button
 					type="button"

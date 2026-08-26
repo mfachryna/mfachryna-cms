@@ -2,7 +2,11 @@ import { json } from '@sveltejs/kit';
 import { cloudinaryUploader } from '$lib/utils/cloudinary';
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request, locals }) => {
+	if (!locals.user) {
+		return json({ error: 'Unauthorized' }, { status: 401 });
+	}
+
 	try {
 		const { publicIds } = await request.json();
 

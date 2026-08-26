@@ -76,6 +76,21 @@
 		updateChangeDetection();
 	});
 
+
+	/**
+	 * Order-insensitive comparison for the tag id arrays.
+	 *
+	 * This was being called by updateChangeDetection() but never defined, and
+	 * that function runs reactively — so every render threw a ReferenceError
+	 * and unsaved-change detection never worked on this page.
+	 */
+	function arraysEqual(a: number[] = [], b: number[] = []): boolean {
+		if (a.length !== b.length) return false;
+		const x = [...a].sort();
+		const y = [...b].sort();
+		return x.every((v, i) => v === y[i]);
+	}
+
 	function updateChangeDetection() {
 		if (!browser) {
 			hasUnsavedChanges = false;
@@ -106,7 +121,7 @@
 			currentIsHidden !== initialIsHidden ||
 			content !== initialContent ||
 			!arraysEqual(highlights, initialHighlights) ||
-			!arraysEqual(selectedTagIds, initialSelectedTagIds);
+			!arraysEqual(selectedTags, initialTags);
 	}
 
 	$: if (browser) {
@@ -206,7 +221,7 @@
 			currentIsHidden !== initialIsHidden ||
 			content !== initialContent ||
 			!arraysEqual(highlights, initialHighlights) ||
-			!arraysEqual(selectedTagIds, initialSelectedTagIds);
+			!arraysEqual(selectedTags, initialTags);
 	}
 
 	function handleSubmit() {

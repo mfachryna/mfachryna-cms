@@ -1,6 +1,7 @@
 import type { PageServerLoad, Actions } from './$types';
 import { prisma } from '$lib/server/auth';
 import { fail, redirect } from '@sveltejs/kit';
+import type { Project, Tag } from '@prisma/client';
 
 export const load: PageServerLoad = async () => {
 	try {
@@ -19,6 +20,9 @@ export const load: PageServerLoad = async () => {
 		const nextOrder = (lastProject?.order || 0) + 1;
 
 		return {
+			// Declared so the shared form type includes it; there is no
+			// project yet on the "new" page.
+			project: null as (Project & { tags: Tag[] }) | null,
 			tags,
 			nextOrder,
 			isNew: true
@@ -26,6 +30,9 @@ export const load: PageServerLoad = async () => {
 	} catch (error) {
 		console.error('Error loading project form:', error);
 		return {
+			// Declared so the shared form type includes it; there is no
+			// project yet on the "new" page.
+			project: null as (Project & { tags: Tag[] }) | null,
 			tags: [],
 			nextOrder: 1,
 			isNew: true
