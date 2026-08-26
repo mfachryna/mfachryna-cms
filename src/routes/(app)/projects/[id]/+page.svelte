@@ -15,7 +15,6 @@
 		Calendar,
 		Code,
 		Globe,
-		Github,
 		Star,
 		Loader,
 		FolderOpen,
@@ -26,6 +25,7 @@
 		Images,
 		Clock
 	} from 'lucide-svelte';
+	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
 	import { generateFolderPath } from '$lib/utils/imageResize';
 
 	export let data;
@@ -366,7 +366,7 @@
 					on:click={viewGithub}
 					class="flex items-center space-x-2 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
 				>
-					<Github class="h-4 w-4" />
+					<GithubIcon class="h-4 w-4" />
 					<span>GitHub</span>
 				</button>
 			{/if}
@@ -500,7 +500,7 @@
 
 					<div>
 						<label for="githubUrl" class="mb-2 block text-sm font-medium text-gray-700">
-							<Github class="mr-1 inline h-4 w-4" />
+							<GithubIcon class="mr-1 inline h-4 w-4" />
 							GitHub Repository
 						</label>
 						<input

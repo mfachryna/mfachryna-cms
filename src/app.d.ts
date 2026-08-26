@@ -1,9 +1,12 @@
-// for information about these interfaces
+// See https://svelte.dev/docs/kit/types#app.d.ts
 declare global {
 	namespace App {
 		interface Locals {
-			user: import('$lib/server/auth').SessionValidationResult['user'];
-			session: import('$lib/server/auth').SessionValidationResult['session'];
+			// Populated by hooks.server.ts from Lucia. Previously these were
+			// typed from the unused Drizzle helpers in $lib/server/auth, which
+			// declared a `username` field that Lucia never supplies.
+			user: import('lucia').User | null;
+			session: import('lucia').Session | null;
 		}
 	}
 }

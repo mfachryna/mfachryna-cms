@@ -13,7 +13,6 @@
 		Calendar,
 		Clock,
 		ExternalLink,
-		Github,
 		Code,
 		Palette,
 		Globe,
@@ -23,6 +22,7 @@
 		Play,
 		Pause
 	} from 'lucide-svelte';
+	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
 	import ProjectPreviewModal from '$lib/components/ProjectPreviewModal.svelte';
 
 	export let data;
@@ -227,7 +227,7 @@
 			<div class="flex items-center">
 				<div class="flex-shrink-0">
 					<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100">
-						<Github class="h-4 w-4 text-gray-600" />
+						<GithubIcon class="h-4 w-4 text-gray-600" />
 					</div>
 				</div>
 				<div class="ml-4">
@@ -358,7 +358,7 @@
 										class="flex items-center text-gray-600 hover:text-gray-800"
 										title="View GitHub"
 									>
-										<Github class="mr-1 h-3 w-3" />
+										<GithubIcon class="mr-1 h-3 w-3" />
 										Code
 									</button>
 								{/if}

@@ -2,7 +2,13 @@ import { json } from '@sveltejs/kit';
 import { cloudinaryUploader } from '$lib/utils/cloudinary';
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request, locals }) => {
+	// Defence in depth: hooks.server.ts already gates /api, but these
+	// endpoints spend Cloudinary quota and delete assets, so re-check here.
+	if (!locals.user) {
+		return json({ error: 'Unauthorized' }, { status: 401 });
+	}
+
 	try {
 		const formData = await request.formData();
 		const file = formData.get('file') as File;
@@ -46,7 +52,11 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 };
 
-export const DELETE: RequestHandler = async ({ request }) => {
+export const DELETE: RequestHandler = async ({ request, locals }) => {
+	if (!locals.user) {
+		return json({ error: 'Unauthorized' }, { status: 401 });
+	}
+
 	try {
 		const { publicId } = await request.json();
 
