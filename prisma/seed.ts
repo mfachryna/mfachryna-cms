@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -10,13 +11,8 @@ if (!DATABASE_URL) {
 	process.exit(1);
 }
 
-const prisma = new PrismaClient({
-	datasources: {
-		db: {
-			url: DATABASE_URL
-		}
-	}
-});
+const adapter = new PrismaPg({ connectionString: DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
 	try {

@@ -15,9 +15,10 @@ export const load: PageServerLoad = async () => {
           }
         }
       },
-      orderBy: {
-        startDate: 'desc'
-      }
+      orderBy: [
+        { endDate: { sort: 'desc', nulls: 'first' } },
+        { startDate: 'desc' }
+      ]
     });
 
     return {

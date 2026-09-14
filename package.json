@@ -79,5 +79,8 @@
 		"pg": "^8.23.0",
 		"postgres": "^3.4.9",
 		"prisma": "7.10.0"
+	},
+	"prisma": {
+		"seed": "bun prisma/seed.ts"
 	}
 }
