@@ -36,6 +36,8 @@ type Payload = {
 	/** Promote this post to the wide hero slot on page 1 of /blog. */
 	featured?: boolean;
 	assetBaseUrl?: string;
+	lang?: string;
+	locale?: string;
 };
 
 export const POST: RequestHandler = async ({ request, locals }) => {
@@ -83,6 +85,13 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		.map((t) => t.replace(/^#/, '').trim())
 		.filter((t) => t && !/^blog(\/|$)/i.test(t) && !/^note(\/|$)/i.test(t))
 		.slice(0, 12);
+
+	// Extract language from payload or frontmatter and ensure it is tagged
+	const langMatch = markdown.match(/^---\r?\n[\s\S]*?\n(?:lang|locale):\s*["']?([a-zA-Z-]+)["']?[\s\S]*?\n---/i);
+	const explicitLang = (body.lang || body.locale || langMatch?.[1])?.trim().toLowerCase();
+	if (explicitLang && !tags.some((t) => t.toLowerCase() === explicitLang)) {
+		tags.push(explicitLang);
+	}
 
 	const shouldPublish = body.publish === true;
 	const featured = body.featured === true;

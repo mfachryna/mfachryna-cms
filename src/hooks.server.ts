@@ -18,7 +18,7 @@ const PUBLIC_API_ROUTES: string[] = [];
  * plugin. Session auth still works on these; the token is an additional path,
  * never a replacement.
  */
-const TOKEN_API_ROUTES: string[] = ['/api/publish'];
+const TOKEN_API_ROUTES: string[] = ['/api/publish', '/api/upload'];
 
 function isApiRoute(pathname: string) {
 	if (!pathname.startsWith('/api')) return false;

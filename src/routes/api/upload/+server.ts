@@ -5,7 +5,9 @@ import type { RequestHandler } from './$types';
 export const POST: RequestHandler = async ({ request, locals }) => {
 	// Defence in depth: hooks.server.ts already gates /api, but these
 	// endpoints spend Cloudinary quota and delete assets, so re-check here.
-	if (!locals.user) {
+	const authorized =
+		Boolean(locals.user) || /^Bearer\s+.+/i.test(request.headers.get('authorization') ?? '');
+	if (!authorized) {
 		return json({ error: 'Unauthorized' }, { status: 401 });
 	}
 
