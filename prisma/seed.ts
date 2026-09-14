@@ -289,6 +289,65 @@ async function main() {
 
 		await prisma.project.create({
 			data: {
+				title: 'Obsidian & MCP Blog Publishing Engine',
+				subtitle: 'AI-assisted Obsidian to PostgreSQL publishing pipeline',
+				description:
+					'An end-to-end automated publishing system consisting of an Obsidian plugin and a Model Context Protocol (MCP) server. Enables seamless drafting in Obsidian, Markdown to Tiptap HTML conversion, automated metadata tagging, direct database upserting via Prisma, and AI-assisted cross-posting to LinkedIn and X.',
+				imageUrl: '/images/projects/cover/mcp-blog-publisher.webp',
+				thumbnailUrl: '/images/projects/thumbnail/mcp-blog-publisher.webp',
+				githubUrl: 'https://github.com/mfachryna',
+				liveUrl: 'https://mfachryna.my.id/blog',
+				featured: true,
+				order: 1,
+				tags: {
+					connectOrCreate: [
+						{
+							where: { name: 'TypeScript' },
+							create: {
+								name: 'TypeScript',
+								iconUrl: '/images/tags/icon/typescript.svg',
+								isTech: true
+							}
+						},
+						{
+							where: { name: 'MCP' },
+							create: {
+								name: 'MCP',
+								iconUrl: '/images/tags/icon/mcp.svg',
+								isTech: true
+							}
+						},
+						{
+							where: { name: 'Obsidian' },
+							create: {
+								name: 'Obsidian',
+								iconUrl: '/images/tags/icon/obsidian.svg',
+								isTech: true
+							}
+						},
+						{
+							where: { name: 'Prisma' },
+							create: {
+								name: 'Prisma',
+								iconUrl: '/images/tags/icon/prisma.svg',
+								isTech: true
+							}
+						},
+						{
+							where: { name: 'PostgreSQL' },
+							create: {
+								name: 'PostgreSQL',
+								iconUrl: '/images/tags/icon/postgresql.svg',
+								isTech: true
+							}
+						}
+					]
+				}
+			}
+		});
+
+		await prisma.project.create({
+			data: {
 				title: 'Personal Portfolio',
 				subtitle: 'Interactive developer portfolio',
 				description:
@@ -298,7 +357,7 @@ async function main() {
 				githubUrl: 'https://github.com/mfachryna/frontend-fe',
 				liveUrl: 'https://mfachryna.vercel.app',
 				featured: true,
-				order: 1,
+				order: 2,
 				tags: {
 					connectOrCreate: [
 						{
