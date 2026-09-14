@@ -5,6 +5,9 @@ import type { PageServerLoad, Actions } from './$types';
 export const load: PageServerLoad = async () => {
   try {
     const blogs = await prisma.blog.findMany({
+      omit: {
+        content: true
+      },
       include: {
         tags: true
       },

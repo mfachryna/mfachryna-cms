@@ -5,6 +5,9 @@ import { fail } from '@sveltejs/kit';
 export const load: PageServerLoad = async () => {
   try {
     const experiences = await prisma.experience.findMany({
+      omit: {
+        content: true
+      },
       include: {
         tags: {
           orderBy: {

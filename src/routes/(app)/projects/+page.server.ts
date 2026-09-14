@@ -3,23 +3,27 @@ import { prisma } from '$lib/server/auth';
 
 export const load: PageServerLoad = async () => {
   try {
-    const projects = await prisma.project.findMany({
-      include: {
-        tags: true
-      },
-      orderBy: {
-        createdAt: 'desc'
-      }
-    });
-    
-    const technologies = await prisma.tag.findMany({
-      where: {
-        isTech: true
-      },
-      orderBy: {
-        name: 'asc'
-      }
-    });
+    const [projects, technologies] = await Promise.all([
+      prisma.project.findMany({
+        omit: {
+          content: true
+        },
+        include: {
+          tags: true
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      }),
+      prisma.tag.findMany({
+        where: {
+          isTech: true
+        },
+        orderBy: {
+          name: 'asc'
+        }
+      })
+    ]);
     
     return {
       projects,

@@ -7,38 +7,37 @@ export const load: LayoutServerLoad = async (event) => {
 		throw redirect(302, '/login');
 	}
 
+	const user = event.locals.user;
+
 	try {
-		const user = await prisma.user.findUnique({
-			where: { id: event.locals.user.id },
-			select: {
-				id: true,
-				name: true,
-				email: true
+		const contactGroups = await prisma.contact.groupBy({
+			by: ['status'],
+			where: {
+				status: { in: ['new', 'in-progress'] }
+			},
+			_count: {
+				status: true
 			}
 		});
 
-		if (!user) {
-			throw redirect(302, '/login');
+		let newContactsCount = 0;
+		let inProgressCount = 0;
+		for (const group of contactGroups) {
+			if (group.status === 'new') newContactsCount = group._count.status;
+			if (group.status === 'in-progress') inProgressCount = group._count.status;
 		}
-
-		const [newContactsCount, totalNotifications] = await Promise.all([
-			prisma.contact.count({
-				where: { status: 'new' }
-			}),
-			prisma.contact.count({
-				where: {
-					OR: [{ status: 'new' }, { status: 'in-progress' }]
-				}
-			})
-		]);
 
 		return {
 			user,
 			newContactsCount,
-			totalNotifications
+			totalNotifications: newContactsCount + inProgressCount
 		};
 	} catch (error) {
 		console.error('Failed to load layout data:', error);
-		throw redirect(302, '/login');
+		return {
+			user,
+			newContactsCount: 0,
+			totalNotifications: 0
+		};
 	}
 };

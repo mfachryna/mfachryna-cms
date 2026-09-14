@@ -26,6 +26,7 @@ model Experience {
   updatedAt  DateTime  @updatedAt @map("updated_at")
   isHidden   Boolean   @default(false) @map("is_hidden")
 
+  @@index([isHidden, startDate])
   @@map("experiences")
 }
 
@@ -46,6 +47,8 @@ model Project {
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
+  @@index([order])
+  @@index([featured])
   @@map("projects")
 }
 
@@ -67,6 +70,7 @@ model Blog {
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
+  @@index([published, publishedAt])
   @@map("blogs")
 }
 
@@ -96,6 +100,8 @@ model Contact {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
+  @@index([status])
+  @@index([email, createdAt])
   @@map("contacts")
 }
 
@@ -119,5 +125,6 @@ model Session {
 
   user User @relation(references: [id], fields: [userId], onDelete: Cascade)
 
+  @@index([userId])
   @@map("sessions")
 }
